@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class GUIDriver extends Application {
@@ -50,6 +51,7 @@ public class GUIDriver extends Application {
 		// scores
 		Label p1Score = new Label("p1 Score");
 		Label p2Score = new Label("p2 Score");
+		p1Score.setTextFill(Color.DARKORANGE);
 		// winner
 		Label winner = new Label("the winner is...");
 
@@ -136,28 +138,40 @@ public class GUIDriver extends Application {
 				round.addScoreP1(getScore(tileBtns));
 				round.setP1Turn(false);
 				p1Score.setText("p1 score : "+ round.getScore1() + "");
+				p2Score.setTextFill(Color.DARKORANGE);
+				p1Score.setTextFill(Color.BLACK);
 			}
 			// give player 1 their turn
 			else {
 				round.addScoreP2(getScore(tileBtns));
 				round.setP1Turn(true);
 				p2Score.setText("p2 score : "+round.getScore2() + "");
+				p1Score.setTextFill(Color.DARKORANGE);
+				p2Score.setTextFill(Color.BLACK);
 			}
 			// go to next round
 			round.next();
 			// reset for next round
 			reset(tileBtns, lblValue);
+			btnRollOne.setDisable(true);
 			// check who won
 			if (round.getRound() == 10) {
 				if (round.getScore1() < round.getScore2()) {
 					winner.setText("winner is player 1!");
+					p1Score.setTextFill(Color.DARKGREEN);
+					p2Score.setTextFill(Color.BLACK);
 				}
 				if(round.getScore1() > round.getScore2()) {
 					winner.setText("winner is player 2!");
+					p2Score.setTextFill(Color.DARKGREEN);
+					p1Score.setTextFill(Color.BLACK);
 				}
 				if(round.getScore1() == round.getScore2()) {
 					winner.setText("It's a draw!");
+					p1Score.setTextFill(Color.BLACK);
+					p2Score.setTextFill(Color.BLACK);
 				}
+				doneTurn.setDisable(true);
 			}
 			
 			
